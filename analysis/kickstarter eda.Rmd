@@ -1,0 +1,99 @@
+---
+title: "kickstarter EDA"
+output: html_document
+---
+
+Questions to Answer:
+How long does it take, on average, to obtain the goal amount of funding? 
+How much, on average, does the amount of funding differ from goal?
+
+Follow Up Questions:
+Time elapsed between launch date and goal reached: 5 number summary and other important features --> look at distribution of days of successful campaigns
+
+Mean/median time elapsed by top categories
+
+Likelihood of success given days passed: Is there a point where ppl should just give up bc it’s been too long?  
+
+1.
+Found time elapsed (in days) between the day launched and the deadline, then subsetted data to only include successful (state = successful) campaigns.
+
+```{r}
+library(ggplot2)
+ks <- read.csv("ks18.csv")
+ks$deadline <- as.Date(ks$deadline)
+ks$launched <- as.Date(ks$launched)
+ks$timeElapsed <- (ks$deadline - ks$launched)
+success <- subset(ks, ks$state == 'successful')
+
+```
+Summary of time elapsed of all campaigns:
+```{r}
+fivenum(ks$timeElapsed)
+
+```
+Summary of time elapsed of successful campaigns (and mean):
+```{r}
+fivenum(success$timeElapsed)
+mean(success$timeElapsed)
+```
+
+The maximum time elapsed of a successful campaign was 92 days. 
+
+2. Summary of funding difference of all campagins:
+
+```{r}
+ks$diff <- as.numeric(ks$usd.pledged) - as.numeric(ks$goal)
+diffNAdrop <- ks$diff[complete.cases(ks$diff)]
+fivenum(diffNAdrop)
+mean(diffNAdrop)
+```
+
+Summary of funding difference of successful campaigns:
+```{r}
+success$diff <- as.numeric(success$usd.pledged) - as.numeric(success$goal)
+successdiffNAdrop <- success$diff[complete.cases(success$diff)]
+fivenum(successdiffNAdrop)
+mean(successdiffNAdrop)
+```
+
+Visualizations:
+Goal amount over Time Elapsed (Successful Campaigns)
+```{r}
+plot(success$timeElapsed, success$goal, 'h')
+
+success$time_in_days <- as.numeric(success$timeElapsed)
+ggplot(success, aes(time_in_days, goal)) + geom_point()
+ggplot(success, aes(time_in_days, goal)) + geom_smooth()
+
+ggplot(success, aes(time_in_days, goal)) + geom_point() + geom_smooth()
+
+```
+
+Campaigns that are successful are typically completed within 3 months, despite goal price.
+
+Most likely day to be successful:
+
+```{r}
+getmode <- function(v) {
+uniqv <- unique(v)
+uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+v<- success$time_in_days
+getmode(v)
+```
+
+Top category and median time elapsed (success)
+
+```{r}
+getmode(ks$category)
+x <- success$timeElapsed[which(success$category == "Product Design")]
+median(x)
+
+```
+Top main category:
+```{r}
+getmode(ks$main_category)
+y <- success$timeElapsed[which(success$main_category == "Film & Video")]
+median(y)
+```
+
