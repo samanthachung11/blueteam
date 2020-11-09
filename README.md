@@ -54,3 +54,4 @@ For each project with successes, how many backers are there? Is it crowd funded,
 Is there an “ideal” number of backers for the project to be successful?
 Compare number of backers of successful campaigns to number of backers for all campaigns.
 
+Technology is hard.
