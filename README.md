@@ -1,6 +1,7 @@
 # What factors make a Kickstarter campaign successful?
 
 This repository provides explanations of the data analysis process for the DataRes article "[INSERT YOUR TEAM'S ARTICLE TITLE HERE](INSERT URL)", published [INSERT DATE]. Please check out our article, which contains visualizations and insights about Kickstarter campagins.
+
 Contributors: Raymond Bai, Samantha Chung, Emily Hou, Andy Shen, Amy Tang
 
 # Data
