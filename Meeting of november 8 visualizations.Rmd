@@ -1,0 +1,132 @@
+---
+title: "Meeting of November 8 visualizations"
+author: "Samantha Chung"
+date: "11/8/2020"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r chunk 1, cache = TRUE}
+kickstarter_df <- read.csv("ks-projects-201801.csv")
+successful_df <- kickstarter_df[kickstarter_df$state=="successful",]
+
+
+hist(successful_df$backers,breaks = 500, density = 4, col = "red", xlab = "Number of backers", ylab = "Probability of backers in successful projects", main = "Number of backers in successful projects")
+
+```
+
+from the graph it appears that the data is centered towards the left. 
+We perform summary function.
+
+```{r chunk 2, cache = TRUE}
+summary(successful_df$backers)
+```
+
+From the summary function, the 3rd quarter is 167, and the mean is 263.9, henceforth, arbitarily, I subsetted the data that has number of backers smaller than 300. From here, I calculated the 95th quantile for backers.
+
+```{r chunk 3, cache = TRUE}
+quantile(successful_df$backers, probs = 0.95)
+```
+
+```{r chunk 4.1, cache= TRUE}
+hist(successful_df$backers[successful_df$backers < 885], breaks = 100, col = "blue", xlab = "number of backers", ylab = "frequency", main = "Successful projects with backers less than 300")
+axis(side = 1,at=c(100,200,300,400,500,600,700,800,900))
+
+```
+
+Working with failed, cancelled, live, and suspended categories:
+
+```{r chunk 4, cache = TRUE}
+canceled_failed_df <- kickstarter_df[kickstarter_df$state=="canceled"| kickstarter_df$state=="failed",]
+others_df <- kickstarter_df[kickstarter_df$state == "live"| kickstarter_df$state == "suspended"|kickstarter_df$state == "undefined",]
+
+```
+
+Summary of failed + canceled data and calculation of 95% percentile
+```{r chunk 5, cache = TRUE}
+summary(canceled_failed_df$backers)
+
+quantile(canceled_failed_df$backers, probs = 0.95) #72 backers at 95 quantile
+```
+
+Summary of live + suspended + undefined data and calculation of 95% percentile
+
+```{r chunk 6, cache = TRUE}
+summary(others_df$backers)
+quantile(others_df$backers, probs = 0.95)
+```
+
+Histograms 
+
+```{r chunk 7, cache = TRUE}
+hist(successful_df$backers[successful_df$backers < 885], col = "blue", breaks = 100, xlab = "number of backers", ylab = "Frequency", main = "histogram of backers for different states")
+hist(canceled_failed_df$backers[canceled_failed_df$backers < 885], col = "orange", add = TRUE,  breaks = 100)
+hist(others_df$backers[others_df$backers < 885], col= "green", add = TRUE,  breaks = 100)
+axis(side = 1, at = c(100,200,300,400,500,600,700,800,900))
+
+legend("topright",c("successful", "canceled+failed", "live+suspended+undefined"), fill = c("blue", "orange", "green"))
+```
+
+Henceforth, in general we see that although some successful projects tend to have less backers, it generally still has more backers than canceled, failed, live, suspended, or undefined projects. Henceforth, successful projects tend to rely on crowdfunding sources.
+
+To answer our questions:
+Question : For each project with successes, how many backers are there? Is it crowd funded, or is the success relied on one or two contributors?
+
+Answer: For projects with successes, the 95th percentile is 885 backers. It generally relies on crowdfunding.
+
+Question: Is there an “ideal” number of backers for the project to be successful?
+
+Answer: It is hard to estimate an "exact" ideal number, but from the summary function three-fourth of data are around 170 backers, and 95% of the data have backers less than or equal to 885.
+
+Question: Compare number of backers of successful campaigns to number of backers for all campaigns
+
+Answer: Generally, there are more backers for those projects that have succesfully met their goals as compared to those projects that do not meet their goals.
+
+
+Attempting to analyze the number of backers for successful projects
+
+```{r chunk one, cache = TRUE}
+popularity_successful_df <- successful_df[successful_df$main_category=="Art" | successful_df$main_category=="Comics"| successful_df$main_category=="Crafts",]
+
+art_df <- popularity_successful_df[successful_df$main_category=="Art","backers"]
+comics_df <- popularity_successful_df[successful_df$main_category == "Comics", "backers"]
+crafts_df <- popularity_successful_df[successful_df$main_category == "Crafts", "backers"]
+
+```
+
+```{r chunk a, cache=TRUE}
+
+#art
+summary(art_df)
+
+
+#comic
+
+summary(comics_df)
+
+#craft
+summary(crafts_df)
+
+```
+
+```{r chunk hist, cache = TRUE}
+hist(art_df, col = "blue", breaks = 100, xlab = "Number of backers", ylab = "Frequency", main = "histogram showing backers for arts, comics, and crafts")
+
+hist(comics_df, col = "red", breaks = 100, add = TRUE)
+
+hist(crafts_df, col = "green", breaks = 100, add = TRUE)
+
+legend("topright", c("art", "comic", "craft"), fill = c("blue", "red", "green"))
+```
+
+```{r chunk R, cache = TRUE}
+quantile(art_df, probs = 0.95, na.rm = TRUE)
+quantile(comics_df, probs = 0.95, na.rm = TRUE)
+quantile(crafts_df, probs = 0.95, na.rm = TRUE)
+```
+
