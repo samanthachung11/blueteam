@@ -53,7 +53,7 @@ Count (looking at the top three project categories, are projects in those catego
 How big can projects get? How high is too high? Is there an ideal goal amount that has highest rates of success?) [Emily]
 
 # Number of backers analysis - Samantha Chung
-For the successful campaigns, the 95th percentile is 885 backers, with there being a large range, as the third quartile is 167 backers but the maximum is 219382 backers. By looking at the first, median, and third quartiles, we noticed that there are generally around under one thousand backers for successful projects. 
+For the successful campaigns, the 95th percentile is 885 backers, with there being a large range, as the third quartile is 167 backers but the maximum is 219382 backers. Also, the 219382 backers comes from the project main category of games.By looking at the first, median, and third quartiles, we noticed that there are generally around under one thousand backers for successful projects. 
 
 For the unsuccessful campaigns, which is defined by cancelled and failed campaigns, the 95th quantile is 72, and the third quartile is 13 backers.
 
