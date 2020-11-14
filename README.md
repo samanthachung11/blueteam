@@ -52,8 +52,16 @@ Count (looking at the top three project categories, are projects in those catego
 # Funding goal
 How big can projects get? How high is too high? Is there an ideal goal amount that has highest rates of success?) [Emily]
 
-# Number of backers
-For projects that succeed, look at number of backers [samantha]
-For each project with successes, how many backers are there? Is it crowd funded, or is the success relied on one or two contributors?
-Is there an “ideal” number of backers for the project to be successful?
-Compare number of backers of successful campaigns to number of backers for all campaigns.
+# Number of backers analysis - Samantha Chung
+For the successful campaigns, the 95th percentile is 885 backers, with there being a large range, as the third quartile is 167 backers but the maximum is 219382 backers. By looking at the first, median, and third quartiles, we noticed that there are generally around under one thousand backers for successful projects. 
+
+For the unsuccessful campaigns, which is defined by cancelled and failed campaigns, the 95th quantile is 72, and the third quartile is 13 backers.
+
+For everything else, defined by the live, suspended, and undefined campaigns, the 95th quantile is 122.7 and the third quartile is 6 backers. 
+
+Furthermore, visually, the "successful" campaigns seems to have a backer distribution that is more left skewed than the failed and cancelled, or "others" category. Henceforth, in general, successful campaigns appears to be funded by a larger number of backers.
+
+Additionally, we also looked at the top three categories: arts, crafts, and comics. Amongst these, the quartile distributions, and 95th quartile distribution is not too different from the overall distribution of the number of backers. Therefore, we can also conclude that amongst the most popular categories, the number of backers funded is no differnet than other categories that were not as popular. 
+
+Finally, this is in line with our predictions because one would expect a project with a greater amount of backers to be the most successful.
+
